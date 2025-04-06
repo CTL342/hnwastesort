@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartsort</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">Smart Sort</a>
+        <div class="navbar-links">
+             <a href="index.html" class="nav-link active">Home</a>
+            <a href="search.html" class="nav-link">Search</a>
+             <div class="user-auth-section">
+                 <div id="login-placeholder"></div> <div id="user-info" style="display: none;">
+                     Welcome, <span id="username-display">User</span>!
+                     (<span id="points-display">0</span> Points)
+                     <button id="logout-button" class="logout-btn">Logout</button>
+                 </div>
+             </div>
+        </div>
+    </nav>
+
+    <main>
+         <div class="main-points-counter" id="main-points-display" style="display: none;">
+             Points: <span id="main-points-value">0</span>
+         </div>
+
+        <div class="content-center">
+            <p class="subheading">The Intuitive AI Model That Sorts Waste</p>
+            <p class="cta-text">Click on the Search to Start Recycling!</p>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    </body>
+</html>

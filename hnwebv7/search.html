@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSort - Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+         <div class="brand-area">
+            <a href="index.html" class="navbar-brand">Smart Sort</a>
+             <div class="brand-points" id="brand-points-display" style="display: none;">
+                (<span id="brand-points-value">0</span> Points)
+            </div>
+        </div>
+        <div class="navbar-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="search.html" class="nav-link active">Search</a>
+            <div class="user-auth-section">
+                <button id="login-button" class="login-btn">Login</button>
+                <div id="user-info" style="display: none;">
+                    Welcome, <span id="username-display">User</span>!
+                    (<span id="points-display">0</span> Points)
+                    <button id="logout-button" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-container search-page-content">
+        <h1>Classify Waste</h1>
+        <form id="search-form">
+            <div class="input-group">
+                <input type="search" id="search-bar" name="query" placeholder="Enter waste item (e.g., milk jug)">
+                <select id="location-select" name="location" aria-label="Select Location">
+                    <option value="" disabled selected>Select Location</option>
+                    <option value="dc">Washington, DC</option>
+                    <option value="fairfax_va">Fairfax County, VA</option>
+                    <option value="arlington_va">Arlington County, VA</option>
+                    <option value="alexandria_va">Alexandria City, VA</option>
+                    <option value="loudoun_va">Loudoun County, VA</option>
+                    <option value="prince_william_va">Prince William County, VA</option>
+                    <option value="montgomery_md">Montgomery County, MD</option>
+                    <option value="prince_georges_md">Prince George's County, MD</option>
+                </select>
+            </div>
+            <button type="submit" class="search-button">Classify</button>
+        </form>
+        <div id="results-output" class="output-display">
+            </div>
+    </main>
+
+    <input type="file" id="file-upload-input" accept="image/*" style="display: none;">
+    <label for="file-upload-input" class="upload-btn action-btn" title="Upload Image">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <span class="action-btn-text">Upload</span>
+    </label>
+    <button type="button" id="camera-button" class="camera-btn action-btn" title="Use Camera">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+        <span class="action-btn-text">Camera</span>
+    </button>
+    <button id="qr-button" class="action-btn" aria-label="Show QR Code" title="Show QR Code">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4z"></path><path d="M14 4h6v6h-6z"></path><path d="M4 14h6v6H4z"></path><path d="M14 14h6v6h-6z"></path></svg>
+    </button>
+    <div id="file-info"></div> <div id="qr-overlay"> <div id="qr-code-container">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ExampleData" alt="QR Code">
+            <p>Scan this code</p>
+        </div>
+    </div>
+     <div id="camera-modal" class="modal-overlay"> <div class="modal-content">
+        <h2>Camera View</h2>
+        <video id="camera-video" playsinline autoplay muted></video>
+        <canvas id="camera-canvas" style="display:none;"></canvas>
+        <div class="modal-controls">
+            <button type="button" id="capture-button" class="modal-button">Capture & Analyze</button>
+            <button type="button" id="close-camera-button" class="modal-button cancel">Close Camera</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
