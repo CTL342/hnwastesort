@@ -1,52 +1,138 @@
-Prerequisites:
+# Smart Sort API Backend
 
-Python 3: Make sure you have Python 3 installed on your computer. You can check by opening your terminal or command prompt and typing python --version or python3 --version. If you don't have it, download it from python.org.
-pip: Python's package installer. It usually comes with Python 3. You can check with pip --version or python -m pip --version.
-Google API Key: You need a valid Google API key that is enabled for the Gemini API (specifically including access to vision models like gemini-1.5-flash-latest or gemini-pro-vision). Make sure billing might be enabled on your Google Cloud project if required. Get your key from Google AI Studio or the Google Cloud Console.
-Setup Instructions:
+This repository contains the Python Flask backend for the Smart Sort application. The server provides the core logic for waste classification through two primary methods: a rule-based text search and an AI-powered image analysis service using the Google Gemini API.
 
-Create Project Folder:
+---
 
-Create a new folder on your computer for this project (e.g., smart_sort_app).
-Place all the code files (index.html, search.html, style.css, script.js, app.py) directly inside this folder.
-Create uploads Folder:
+## Core Features
 
-Inside your project folder (smart_sort_app), create an empty subfolder named exactly uploads. The app.py script will use this to temporarily save images during analysis.
-Install Python Libraries:
+-   **RESTful API:** Exposes simple endpoints for easy integration with a frontend client.
+-   **Rule-Based Text Classification:** Utilizes a comprehensive set of predefined rules for various localities (including DC, Fairfax County, Arlington County, and others) to provide accurate, location-specific sorting instructions.
+-   **AI Image Analysis:** Integrates the `gemini-1.5-flash-latest` model to identify and classify objects from user-uploaded images in real-time.
+-   **Scalable Structure:** Easily extendable to include new locations or update existing disposal rules by modifying the data dictionaries.
 
-Open your Terminal or Command Prompt.
-Navigate (cd) into your project folder (e.g., cd path/to/smart_sort_app).
-Run the following command to install Flask, CORS support, the Google AI library, Pillow for image handling, and OpenCV (which might be needed by underlying dependencies or future image processing):
-Bash
+---
 
+## Technology Stack
+
+-   **Backend:** Python 3
+-   **Framework:** Flask
+-   **AI Service:** Google Gemini API
+-   **Libraries:** `google-generativeai`, `Pillow`, `Flask-Cors`
+
+---
+
+## Prerequisites
+
+Before proceeding, ensure your development environment meets the following requirements.
+
+### 1. Python 3.x and pip
+
+This application requires Python 3 to run. The package installer, `pip`, is typically included with modern Python installations.
+
+**How to Install Python:**
+
+1.  **Download:** Go to the official Python website: [python.org/downloads/](https://www.python.org/downloads/)
+2.  **Run Installer:** Download the latest Python 3 installer for your operating system (Windows or macOS) and run it.
+    -   **On Windows:** Make sure to check the box that says **"Add Python to PATH"** during the installation process.
+3.  **Verify Installation:** Once installed, open your terminal or Command Prompt and verify the installation by running:
+    ```bash
+    python --version
+    ```
+    or on some systems:
+    ```bash
+    python3 --version
+    ```
+    You should see a version number like `Python 3.x.x`. You can verify `pip` with `pip --version`.
+
+### 2. Google API Key
+
+A valid Google API key with the Gemini API enabled is required for the image analysis functionality. This can be obtained from Google AI Studio or the Google Cloud Console.
+
+---
+
+## Setup and Installation
+
+Follow these steps to configure the project on your local machine.
+
+### 1. Project Structure
+
+Create a root folder for the project and a necessary subfolder for image uploads.
+
+```bash
+# Create the main project directory
+mkdir smart_sort_app
+
+# Navigate into the new directory
+cd smart_sort_app
+
+# Create the folder for temporary image uploads
+mkdir uploads
+```
+
+Place the app.py script and any frontend files (index.html, style.css, etc.) inside the smart_sort_app directory.
+
+### 2. Install Dependencies
+
+Install the required Python libraries using pip:
+
+```bash
 pip install Flask flask-cors google-generativeai Pillow opencv-python
-(Wait for the installation to complete successfully.)
-Set Google API Key Environment Variable:
+```
 
-This is crucial for app.py to authenticate with Google AI.
-In the SAME terminal window you will use to run app.py in the next section, set the variable using the command appropriate for your system.
+### 3. Environment Configuration
 
-Execution Instructions:
+The application requires your Google API Key to be set as an environment variable. This is a critical step for authenticating with the Gemini API. Execute the appropriate command for your operating system in the terminal session you will use to run the server.
 
-Run the Python Backend Server:
+* macOS / Linux:
 
-Make sure you are still in your project folder (smart_sort_app) in the same terminal where you set the GOOGLE_API_KEY.
-Run the Flask application:
-Bash
+```bash
+export GOOGLE_API_KEY='YOUR_API_KEY_HERE'
+```
 
+* Windows (Command Prompt):
+
+```bash
+set GOOGLE_API_KEY=YOUR_API_KEY_HERE
+```
+
+* Windows (PowerShell):
+
+```bash
+$env:GOOGLE_API_KEY="YOUR_API_KEY_HERE"
+```
+
+Note: Replace YOUR_API_KEY_HERE with your actual API key.
+
+
+## Execution
+
+### 1. Run the server
+
+From the root of your project directory (smart_sort_app), execute the following command to start the Flask server:
+
+```bash
 python app.py
-You should see output indicating the AI model loaded (hopefully successfully!) and the server starting, typically like:
+```
+
+Upon successful startup, you will see output similar to the following:
+
+```bash
 AI Vision Model loaded successfully.
-Starting Smart Sorter API server (Text & Image) on http://YOUR IP ADDRESS
+Starting Smart Sorter API server (Text & Image) on [http://127.0.0.1:5000](http://127.0.0.1:5000)
 Press CTRL+C to stop the server.
+```
 
-Login (Simulated): On the search.html page, click the "Login" button in the top right. Enter user for the username and password for the password when prompted. The navbar should update to show "Welcome, user!" and the points counters (starting at 0).
-Text Search: Select a location from the dropdown, type an item name (e.g., "plastic bottle", "styrofoam") in the search bar, and click "Classify". The results (based on the example rules in app.py for that location) should appear below. If logged in and successful, points should increase.
-Image Upload: Click the "Upload" button (middle button, bottom right), select an image file from your computer. The filename will briefly appear, and then the image analysis results from Gemini should appear in the results area. If logged in and successful, points should increase (by 5 in the example).
-Camera: Click the "Camera" button (top button, bottom right). Your browser should ask for permission to use the camera. Allow it. A modal window showing your camera feed should appear. Aim it at an object, click "Capture & Analyze". The modal will close, and the analysis results should appear. If logged in and successful, points should increase. (Requires HTTPS or localhost usually).
-QR Code: Click the QR code button (bottom button, bottom right). An overlay with a placeholder QR code should appear. Click outside the white box or press 'Escape' to close it.
-Logout (Simulated): Click the "Logout" button in the navbar. Points will reset to 0 (in the browser), and the login button will reappear.
-Stopping the Application:
+The backend is now running and ready to accept requests.
 
-Go back to the terminal window running python app.py and press Ctrl+C.
-If you started the second server (python -m http.server), go to that terminal and press Ctrl+C.
+### 2. Application Usage
+
+With the server running, a frontend client can interact with the following API endpoints:
+
+* Text Search: Send a GET request to /sort with location and query parameters to get rule-based classification.
+    * Example http://127.0.0.1:5000/sort?location=fairfax_va&query=plastic%20bottle
+* Image Analysis: Send a POST request to /analyze_image with a multipart/form-data payload containing the image_file to get an AI-based classification.
+
+### 3. Stopping the Application
+
+To terminate the server process, return to the terminal window where it is running and press Ctrl+C.
